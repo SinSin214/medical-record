@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+	.body {
+		background-image: linear-gradient(to right, #929daa, #ededef);
+		min-height: 651px;
+        max-height: 3000px;
+	}
+
+	#buttonSubmit {
+		margin-left: 35%;
+		width: 30%;
+		display: block;
+		font-size: 17px;
+		font-weight: bold;
+	}
+
+	label {
+		font-size: 16px;
+	}
+
+	.upload-btn-wrapper {
+		overflow: hidden;
+		margin-top: 5px;
+		position: relative;
+	}
+
+	.button-btn {
+		border: 2px solid gray;
+		width: 30%;
+		margin-left: 35%;
+		color: gray;
+		background-color: white;
+		padding: 8px 20px;
+		border-radius: 8px;
+		font-size: 19px;
+		font-weight: bold;
+	}
+
+	.upload-btn-wrapper input[type=file] {
+		left: 0;
+		top: 0;
+	}
+
+	.circle-loader {
+		border: 4px solid rgba(0, 0, 0, 0.2);
+		border-left-color: #337ab7;
+		animation: loader-spin 1.2s infinite linear;
+		position: relative;
+		display: inline-block;
+		vertical-align: top;
+		border-radius: 50%;
+		width: 4em;
+		height: 4em;
+	}
+
+	.load-complete {
+		-webkit-animation: none;
+		animation: none;
+		border-color: #337ab7;
+		transition: border 500ms ease-out;
+	}
+
+	.checkmark {
+		display: none;
+	}
+
+	.checkmark.draw:after {
+		animation-duration: 800ms;
+		animation-timing-function: ease;
+		animation-name: checkmark;
+		transform: scaleX(-1) rotate(135deg);
+	}
+
+	.checkmark:after {
+		opacity: 1;
+		height: 2em;
+		width: 1em;
+		transform-origin: left top;
+		border-right: 5px solid #337ab7;
+		border-top: 5px solid #337ab7;
+		content: '';
+		left: 0.7em;
+		top: 1.9em;
+		position: absolute;
+	}
+
+	@keyframes loader-spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes checkmark {
+		0% {
+			height: 0;
+			width: 0;
+			opacity: 1;
+		}
+		20% {
+			height: 0;
+			width: 1em;
+			opacity: 1;
+		}
+		40% {
+			height: 2em;
+			width: 1em;
+			opacity: 1;
+		}
+		100% {
+			height: 2em;
+			width: 1em;
+			opacity: 1;
+		}
+	}
+
+.circle-loader-later {
+  border: 10px solid rgba(0, 0, 0, 0.2);
+  border-left-color: #129928;
+  animation: loader-spin-later 1.2s infinite linear;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 50%;
+  width: 12em;
+  height: 12em;
+  left: 37%;
+}
+
+.load-complete-later {
+  -webkit-animation: none;
+  animation: none;
+  transition: border 500ms ease-out;
+}
+
+.load-complete-later.checkmark-later {
+  border-color: #129928;
+}
+
+.load-complete-later.failmark-later {
+  border-color: #cd0a58;
+}
+
+.failmark-later > div.draw-later {
+  display: block;
+}
+.failmark-later > div.draw-later:before {
+  animation-duration: 800ms;
+  animation-timing-function: ease;
+  animation-name: failmark;
+  transform: scaleX(-1) rotate(135deg);
+}
+.failmark-later > div.draw-later:before {
+    opacity: 1;
+    height: 3.5em;
+    width: 3.5em;
+    transform-origin: left top;
+    border-right: 7px solid #cd0a58;
+    border-top: 7px solid #cd0a58;
+    content: "";
+    left: 2.6em;
+    top: 3.3em;
+    position: absolute;
+}
+.failmark-later > div.draw-later:after {
+    opacity: 1;
+    height: 3.5em;
+    width: 3.5em;
+    transform-origin: left top;
+    border-right: 7px solid #cd0a58;
+    border-top: 7px solid #cd0a58;
+    content: "";
+    left: 7.6em;
+    top: 7.6em;
+    position: absolute;
+}
+.failmark-later > div.draw-later:after {
+  animation-duration: 800ms;
+  animation-timing-function: ease;
+  animation-name: failmark-later;
+  transform: scaleX(-1) rotate(314deg);
+}
+
+.checkmark-later > div.draw-later {
+  display: block;
+}
+.checkmark-later > div.draw-later:after {
+    opacity: 1;
+    height: 7em;
+    width: 3.5em;
+    transform-origin: left top;
+    border-right: 11px solid #129928;
+    border-top: 11px solid #129928;
+    content: "";
+    left: 1.5em;
+    top: 6em;
+    position: absolute;
+}
+.checkmark-later > div.draw-later:after {
+  animation-duration: 800ms;
+  animation-timing-function: ease;
+  animation-name: checkmark-later;
+  transform: scaleX(-1) rotate(135deg);
+}
+
+@keyframes loader-spin-later {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes failmark-later {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: 3.5em;
+    opacity: 1;
+  }
+  40% {
+    height: 3.5em;
+    width: 3.5em;
+    opacity: 1;
+  }
+  100% {
+    height: 3.5em;
+    width: 3.5em;
+    opacity: 1;
+  }
+}
+@keyframes checkmark-later {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  20% {
+    height: 0;
+    width: 3.5em;
+    opacity: 1;
+  }
+  40% {
+    height: 7em;
+    width: 3.5em;
+    opacity: 1;
+  }
+  100% {
+    height: 7em;
+    width: 3.5em;
+    opacity: 1;
+  }
+}
+
+.text-process{
+	font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 80px;
+	text-align: center;
+}
+
+.text-successful{
+	font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 60px;
+	text-align: center;
+}
+
+.text-fail{
+	font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 80px;
+	text-align: center;
+}
+
+.noti-text{
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 80px;
+	text-align: center;
+    color: red;
+}
+
+.buttonSubmit {
+    width: 30%;
+    margin: 0 2% 3% 2%;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+</style>
+
+<head>
+	<meta charset="utf-8">
+	<link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="javascript/jquery.min.js"></script>
+	<script languege="javascript" src="javascript/web3.min.js"></script>
+	<script src="javascript/ipfs.js"></script>
+	<link rel="stylesheet" href="stylesheets/bootstrap3.4.min.css">
+</head>
+
+<body>
+	<div class="body">
+		<div id="navigation"></div>
+		<div class="container form" style="width: 100%; min-height: 500px">
+			<div class="row" style="margin: 6% 0 6% 0">
+				<div class="col-lg-12">
+					<div class="modal-dialog" style="width: 50%; left: 25%; margin: 0px !important">
+						<div class="modal-content" style="display: block">
+							<div class="modal-header text-center" style="background: rgb(131, 131, 134)">
+								<h3 class="modal-title w-100" style="font-weight: bold; font-size: 28px">Medical Form</h3>
+							</div>
+							<div class="modal-body" style="padding: 15px 25px 15px 25px">
+								<div style="font-size: 25px">
+								<span class="glyphicon glyphicon-user"></span><label style="margin-left: 5px; font-size: 20px; font-weight: bold">Patient information</label>
+							</div>
+								<div style="border: solid 2px #808080;">
+									<div style="padding: 15px">
+								<div class="form-group">
+									<label>Name:</label>
+									<input type="text" class="form-control name">
+								</div>
+								<div class="form-group" style="display: flow-root">
+									<div class="pull-left">
+										<label>Gender:</label>&nbsp
+										<input type="radio" name="gender" value="male" checked> Male
+										<input type="radio" name="gender" value="female"> Female
+									</div>
+									<div class="pull-right">
+										<label>Age:</label>
+										<input type="number" class="form-control age">
+									</div>
+								</div>
+								<div class="form-group">
+									<label>Patient address:</label>
+									<input type="text" class="form-control ownership">
+								</div>
+								</div>
+								</div><br>
+								<div style="font-size: 25px">
+										<span class="glyphicon glyphicon-heart"></span><label style="margin-left: 5px; font-size: 20px; font-weight: bold">Health status</label>
+									</div>
+									<div style="border: solid 2px #808080;">
+											<div style="padding: 15px">
+								<div class="form-group">
+									<label>Disease name:</label>
+									<input type="text" class="form-control disease_name">
+								</div>
+								<div class="form-group">
+									<label>Symptom:</label>
+									<input type="text" class="form-control sympton">
+									<div class="listSympton"></div>
+									<button class="moreSympton btn btn-primary" style="margin: 15px 0 0 0">Add more symptons</button>
+								</div>
+								<div class="form-group">
+									<label>Medicine:</label>
+									<input type="text" class="form-control medicine">
+									<div class="listMedicine"></div>
+									<button class="moreMedicine btn btn-primary" style="margin: 15px 0 0 0">Add more medicines</button>
+								</div>
+								<div class="form-group">
+									<span class="glyphicon glyphicon-picture"></span>
+									<label>Image: </label>
+									<div class="upload-btn-wrapper">
+										<input type="file" id="image_record" name="myFile" style="display: unset; margin-top: 2%" />
+										<div class="circle-loader" style="display: none">
+											<div class="checkmark draw"></div>
+										</div>
+									</div>
+								</div>
+								</div>
+								</div><br>
+								<div style="text-align: center">
+								<button type="submit" class="btn btn-primary buttonSubmit" id="click">SUBMIT RECORD</button>
+							</div>
+							</div>
+						</div>
+						<div class="loading" style="display: none">
+							<div class="text-process">Your request is processing...</div>
+							<div class="text-successful" style="display: none">Your record has been created at address <br>
+							<p class="address" style="color: red; font-size: 24px"></p>
+							</div>
+							<div class="text-fail" style="display: none">Your transaction is failed.</div>
+							<div class="circle-loader-later">
+								<div class="checkmark-later draw-later"></div>
+							</div>
+						</div>
+						<div class="noti" style="display: none">
+							<div class="noti-text">Your request is denied</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$(document).ready(function () {
+		$("#navigation").load("navbar.html");
+
+		$('.moreSympton').click(function () {
+			var list_sympton = $('.listSympton');
+			$(list_sympton).append('<div style="display: -webkit-box; margin-top: 10px" class="input-sympton"><input type="text" class="form-control sympton"><button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true" style="margin-left: 2px">×</span> </button></div>')
+
+			$('.btn-close').click(function () {
+				$(this).parent('.input-sympton').remove();
+			})
+		});
+
+		$('.moreMedicine').click(function () {
+			var list_medicine = $('.listMedicine');
+			$(list_medicine).append('<div style="display: -webkit-box; margin-top: 10px" class="input-medicine"><input type="text" class="form-control medicine"><button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true" style="margin-left: 2px">×</span> </button></div>')
+
+			$('.btn-close').click(function () {
+				$(this).parent('.input-medicine').remove();
+			})
+		});
+
+		window.onload = function () {
+			$(".menu.form a").css({ "background-color": "#111", "color": "white" });
+		}
+	});
+</script>
+<script type='text/javascript' src="./Form.js"></script>
+
+</html>

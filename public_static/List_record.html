@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .body {
+        background-image: linear-gradient(to right, #929daa, #ededef);
+        min-height: 651px;
+        max-height: 3000px;
+    }
+
+    .circle-loader-later {
+        border: 10px solid rgba(0, 0, 0, 0.2);
+        border-left-color: #129928;
+        animation: loader-spin-later 1.2s infinite linear;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        border-radius: 50%;
+        width: 12em;
+        height: 12em;
+        left: 44%;
+        bottom: 50px;
+    }
+
+    .load-complete-later {
+        -webkit-animation: none;
+        animation: none;
+        transition: border 500ms ease-out;
+    }
+
+    .load-complete-later.checkmark-later {
+        border-color: #129928;
+    }
+
+    .load-complete-later.failmark-later {
+        border-color: #cd0a58;
+    }
+
+    .failmark-later>div.draw-later {
+        display: block;
+    }
+
+    .failmark-later>div.draw-later:before {
+        animation-duration: 800ms;
+        animation-timing-function: ease;
+        animation-name: failmark;
+        transform: scaleX(-1) rotate(135deg);
+    }
+
+    .failmark-later>div.draw-later:before {
+        opacity: 1;
+        height: 3.5em;
+        width: 3.5em;
+        transform-origin: left top;
+        border-right: 7px solid #cd0a58;
+        border-top: 7px solid #cd0a58;
+        content: "";
+        left: 2.6em;
+        top: 3.3em;
+        position: absolute;
+    }
+
+    .failmark-later>div.draw-later:after {
+        opacity: 1;
+        height: 3.5em;
+        width: 3.5em;
+        transform-origin: left top;
+        border-right: 7px solid #cd0a58;
+        border-top: 7px solid #cd0a58;
+        content: "";
+        left: 7.6em;
+        top: 7.6em;
+        position: absolute;
+    }
+
+    .failmark-later>div.draw-later:after {
+        animation-duration: 800ms;
+        animation-timing-function: ease;
+        animation-name: failmark-later;
+        transform: scaleX(-1) rotate(314deg);
+    }
+
+    .checkmark-later>div.draw-later {
+        display: block;
+    }
+
+    .checkmark-later>div.draw-later:after {
+        opacity: 1;
+        height: 7em;
+        width: 3.5em;
+        transform-origin: left top;
+        border-right: 11px solid #129928;
+        border-top: 11px solid #129928;
+        content: "";
+        left: 1.5em;
+        top: 6em;
+        position: absolute;
+    }
+
+    .checkmark-later>div.draw-later:after {
+        animation-duration: 800ms;
+        animation-timing-function: ease;
+        animation-name: checkmark-later;
+        transform: scaleX(-1) rotate(135deg);
+    }
+
+    @keyframes loader-spin-later {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes failmark-later {
+        0% {
+            height: 0;
+            width: 0;
+            opacity: 1;
+        }
+        20% {
+            height: 0;
+            width: 3.5em;
+            opacity: 1;
+        }
+        40% {
+            height: 3.5em;
+            width: 3.5em;
+            opacity: 1;
+        }
+        100% {
+            height: 3.5em;
+            width: 3.5em;
+            opacity: 1;
+        }
+    }
+
+    @keyframes checkmark-later {
+        0% {
+            height: 0;
+            width: 0;
+            opacity: 1;
+        }
+        20% {
+            height: 0;
+            width: 3.5em;
+            opacity: 1;
+        }
+        40% {
+            height: 7em;
+            width: 3.5em;
+            opacity: 1;
+        }
+        100% {
+            height: 7em;
+            width: 3.5em;
+            opacity: 1;
+        }
+    }
+
+    .text-process {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 80px;
+        text-align: center;
+    }
+
+    .text-successful {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 60px;
+        text-align: center;
+    }
+
+    .text-fail {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 80px;
+        text-align: center;
+    }
+
+    .noti-text {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 80px;
+        text-align: center;
+        color: red;
+    }
+
+    table tbody tr {
+        height: 50px !important;
+    }
+
+    table tbody tr td {
+        vertical-align: middle !important;
+    }
+</style>
+
+<head>
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <script src="javascript/jquery.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <script languege="javascript" src="./javascript/web3.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="body">
+        <div id="navigation"></div>
+        <div class="container form" style="width: 100%">
+            <div class="row" style="margin: 6% 0 6% 0">
+                <div class="col-lg-12">
+                    <div class="modal-dialog" style="width: 50%; left: 25%; margin: 0px !important">
+                        <div class="modal-content">
+                            <div class="modal-header text-center" style="background: rgb(131, 131, 134)">
+                                <h3 class="modal-title w-100" style="font-weight: bold">Search record</h3>
+                            </div>
+                            <div class="modal-body" style="padding: 15px 25px 15px 25px">
+                                <div class="form-group">
+                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                    <label style="margin-left: 5px">Enter record address:</label>
+                                    <input type="text" class="form-control record_address">
+                                </div>
+                                <div style="text-align: center">
+                                    <button type="submit" class="btn btn-primary buttonSubmit" id="click">SUBMIT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 list_record" style="display: none; margin-top: 100px">
+                        <div class="modal-dialog" style="margin: auto;width: fit-content;">
+                          <div class="modal-content">
+                            <div class="modal-header text-center" style="background: rgb(131, 131, 134)">
+                              <h3 class="modal-title w-100" style="font-weight: bold">Record information</h3>
+                            </div>
+                            <div class="modal-body" style="padding: 15px 25px 15px 25px">
+                              <table class="table table-condensed">
+                                <thead style="font-weight: bold;">
+                                  <tr>
+                                    <th>Disease</th>
+                                    <th>Written date</th>
+                                    <th>Responsible doctor</th>
+                                    <th>Doctor address</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="listRecord"></tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#navigation").load("navbar.html");
+        window.onload = function () {
+            $(".menu.author a").css({ "background-color": "#111", "color": "white" });
+        }
+    });
+</script>
+
+<script type='text/javascript' src="./List_record.js"></script>
+
+
+
+</html>

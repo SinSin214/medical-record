@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+    .body {
+        background-image: linear-gradient(to right, #929daa, #ededef);
+        min-height: 651px;
+        max-height: 3000px;
+    }
+
+    .buttonSubmit {
+        width: 30%;
+        margin: 0 2% 3% 2%;
+        font-size: 16px !important;
+        font-weight: bold !important;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    #info,
+    #authority,
+    #give,
+    #remove,
+    #trade,
+    #expire,
+    .address,
+    .result_authorization,
+    .result_medical {
+        display: none;
+    }
+
+    .result_eth {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .result_medicine,
+    .result_sympton {
+        margin-top: 5px;
+    }
+
+    .circle-loader-later {
+        border: 10px solid rgba(0, 0, 0, 0.2);
+        border-left-color: #129928;
+        animation: loader-spin-later 1.2s infinite linear;
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        border-radius: 50%;
+        width: 12em;
+        height: 12em;
+        left: 44%;
+        bottom: 50px;
+    }
+
+    .load-complete-later {
+        -webkit-animation: none;
+        animation: none;
+        transition: border 500ms ease-out;
+    }
+
+    .load-complete-later.checkmark-later {
+        border-color: #129928;
+    }
+
+    .load-complete-later.failmark-later {
+        border-color: #cd0a58;
+    }
+
+    .failmark-later>div.draw-later {
+        display: block;
+    }
+
+    .failmark-later>div.draw-later:before {
+        animation-duration: 800ms;
+        animation-timing-function: ease;
+        animation-name: failmark;
+        transform: scaleX(-1) rotate(135deg);
+    }
+
+    .failmark-later>div.draw-later:before {
+        opacity: 1;
+        height: 3.5em;
+        width: 3.5em;
+        transform-origin: left top;
+        border-right: 7px solid #cd0a58;
+        border-top: 7px solid #cd0a58;
+        content: "";
+        left: 2.8em;
+        top: 3.3em;
+        position: absolute;
+    }
+
+    .failmark-later>div.draw-later:after {
+        opacity: 1;
+        height: 3.5em;
+        width: 3.5em;
+        transform-origin: left top;
+        border-right: 7px solid #cd0a58;
+        border-top: 7px solid #cd0a58;
+        content: "";
+        left: 7.8em;
+        top: 7.6em;
+        position: absolute;
+    }
+
+    .failmark-later>div.draw-later:after {
+        animation-duration: 800ms;
+        animation-timing-function: ease;
+        animation-name: failmark-later;
+        transform: scaleX(-1) rotate(314deg);
+    }
+
+    .checkmark-later>div.draw-later {
+        display: block;
+    }
+
+    .checkmark-later>div.draw-later:after {
+        opacity: 1;
+        height: 7em;
+        width: 3.5em;
+        transform-origin: left top;
+        border-right: 11px solid #129928;
+        border-top: 11px solid #129928;
+        content: "";
+        left: 1.5em;
+        top: 6em;
+        position: absolute;
+    }
+
+    .checkmark-later>div.draw-later:after {
+        animation-duration: 800ms;
+        animation-timing-function: ease;
+        animation-name: checkmark-later;
+        transform: scaleX(-1) rotate(135deg);
+    }
+
+    @keyframes loader-spin-later {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes failmark-later {
+        0% {
+            height: 0;
+            width: 0;
+            opacity: 1;
+        }
+        20% {
+            height: 0;
+            width: 3.5em;
+            opacity: 1;
+        }
+        40% {
+            height: 3.5em;
+            width: 3.5em;
+            opacity: 1;
+        }
+        100% {
+            height: 3.5em;
+            width: 3.5em;
+            opacity: 1;
+        }
+    }
+
+    @keyframes checkmark-later {
+        0% {
+            height: 0;
+            width: 0;
+            opacity: 1;
+        }
+        20% {
+            height: 0;
+            width: 3.5em;
+            opacity: 1;
+        }
+        40% {
+            height: 7em;
+            width: 3.5em;
+            opacity: 1;
+        }
+        100% {
+            height: 7em;
+            width: 3.5em;
+            opacity: 1;
+        }
+    }
+
+    .text-process {
+        font-size: 30px;
+        font-weight: bold;
+        padding-bottom: 80px;
+        text-align: center;
+    }
+
+    .noti-text {
+        font-size: 30px;
+        font-weight: bold;
+        padding-bottom: 80px;
+        text-align: center;
+        color: red;
+    }
+
+    .text-successful {
+        font-size: 30px;
+        font-weight: bold;
+        padding-bottom: 60px;
+        text-align: center;
+    }
+
+    .text-fail {
+        font-size: 30px;
+        font-weight: bold;
+        padding-bottom: 80px;
+        text-align: center;
+    }
+
+    .container1 {
+        display: inline-block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+        cursor: pointer;
+        font-size: 15px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        width: 250px;
+    }
+
+    .container1 input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .checkmark {
+        position: absolute;
+        top: 3px;
+        left: 5px;
+        height: 18px;
+        width: 18px;
+        background-color: #eee;
+        border-radius: 50%;
+    }
+
+    .container:hover input~.checkmark {
+        background-color: #ccc;
+    }
+
+    .container input:checked~.checkmark {
+        background-color: #2196F3;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .container input:checked~.checkmark:after {
+        display: block;
+    }
+
+    .container .checkmark:after {
+        top: 5px;
+        left: 5px;
+        width: 8px;
+        height: 8px;
+        border-radius: 70%;
+        background: white;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <script src="javascript/jquery.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <script languege="javascript" src="./javascript/web3.min.js"></script>
+    <link rel="stylesheet" href="stylesheets/bootstrap3.4.min.css">
+</head>
+
+<body>
+    <div class="body">
+        <div id="navigation"></div>
+        <div class="container form" style="width: 100%">
+            <div class="row" style="margin: 8% 0 6% 0">
+                <div class="col-lg-12">
+                    <div class="modal-dialog" style="width: 50%; left: 25%; margin: 0px !important">
+                        <div class="modal-content">
+                            <div class="modal-header text-center" style="background: rgb(131, 131, 134)">
+                                <h3 class="modal-title w-100" style="font-weight: bold; font-size: 28px">Record managing</h3>
+                            </div>
+
+                            <div class="modal-body" style="padding: 15px 25px 15px 25px">
+                                <h4>Fill contract address you want to interact</h4>
+                                <div class="form-group">
+                                    <span class="glyphicon glyphicon-folder-open"></span>
+                                    <label style="margin-left: 5px">Your contract address</label>
+                                    <input type="text" class="contractAddress form-control" style="width: 100%">
+                                </div>
+                                <div class="form-group">
+                                    <label>What you want to do?</label>
+                                    <br>
+                                    <div style="margin-top: 8px">
+                                        <div style="margin-left: 70px">
+                                        <label class="container1" style="display: inline-block">View record
+                                            <input type="radio" name="access" value="info">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="container1" style="display: inline-block">View authority
+                                            <input type="radio" name="access" value="authority">
+                                            <span class="checkmark"></span>
+                                        </label></div>
+                                        <div style="margin-left: 70px">
+                                        <label class="container1">Give authority
+                                            <input type="radio" name="access" value="give">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="container1">Remove authority
+                                            <input type="radio" name="access" value="remove">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="container1">Trading
+                                            <input type="radio" name="access" value="trade">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="container1">Remove expired authority
+                                            <input type="radio" name="access" value="expire">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="form-group address" style="display: none">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <label>User address:</label>
+                                    <input type="text" class="form-control address_input" style="width: 100%"><br>
+                                    <span class="glyphicon glyphicon-time"></span>
+                                    <label>Day:</label>
+                                    <input type="text" class="form-control day" style="width: 100%">
+                                </div>
+                                <div class="form-group trade" style="display: none">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    <label>User address:</label>
+                                    <input type="text" class="form-control trading_address" style="width: 100%">
+                                </div>
+                                <div class="listButton" style="text-align: center">
+                                    <button type="submit" class="btn btn-primary buttonSubmit" id="info" onClick="getInfo()">Send request</button>
+                                    <button type="submit" class="btn btn-primary buttonSubmit" id="authority" onClick="getAuthorization()">Send request</button>
+                                    <button type="submit" class="btn btn-primary buttonSubmit" id="give" onClick="giveAuthor()">Send request</button>
+                                    <button type="submit" class="btn btn-primary buttonSubmit" id="remove" onClick="remove()">Send request</button>
+                                    <button type="submit" class="btn btn-primary buttonSubmit" id="trade" onClick="trade()">Send request</button>
+                                    <button type="submit" class="btn btn-primary buttonSubmit" id="expire" onClick="expire()">Send request</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="loading" style="display: none">
+            <div class="text-process">Your request is processing...</div>
+            <div class="text-successful" style="display: none">Your transaction address is
+                <span class="transaction" style="color:red"></span>
+            </div>
+            <div class="text-fail" style="display: none">Your transaction is failed.</div>
+            <div class="circle-loader-later">
+                <div class="checkmark-later draw-later"></div>
+            </div>
+        </div>
+        <div class="noti" style="display: none">
+            <div class="noti-text">Your request is denied</div>
+        </div>
+
+        <div class="container result_medical" style="width: 100%">
+            <div class="row" style="margin: 6% 0 6% 0">
+                <div class="col-lg-12">
+                    <div class="modal-dialog" style="width: 50%; left: 25%; margin: 0px !important">
+                        <div class="modal-content">
+                            <div class="modal-header text-center" style="background: rgb(131, 131, 134)">
+                                <h3 class="modal-title w-100" style="font-weight: bold">Medical Record</h3>
+                            </div>
+                            <div class="modal-body" style="padding: 15px 25px 15px 25px">
+                                <div class="form-group">
+                                    <label>Name:</label>
+                                    <input type="text" class="form-control result_name" readonly>
+                                </div>
+                                <div class="form-group" style="display: flow-root">
+                                    <div class="pull-left">
+                                        <label>Gender:</label>&nbsp
+                                        <input type="text" class="form-control result_gender" readonly>
+                                    </div>
+                                    <div class="pull-right">
+                                        <label>Age:</label>
+                                        <input type="number" class="form-control result_age" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Disease name:</label>
+                                    <input type="text" class="form-control result_disease" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label>Sympton:</label>
+                                    <div class="listSympton"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Medicine:</label>
+                                    <div class="listMedicine"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image: </label>
+                                    <img id="image" src="" style="width: 100%">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container result_authorization" style="width: 100%;">
+            <div class="row" style="margin: 6% 0 6% 0">
+                <div class="col-lg-12">
+                    <div class="modal-dialog" style="width: 50%; left: 25%; margin: 0px !important">
+                        <div class="modal-content">
+                            <div class="modal-header text-center" style="background: rgb(131, 131, 134)">
+                                <h3 class="modal-title w-100" style="font-weight: bold">Authority address</h3>
+                            </div>
+                            <div class="modal-body" style="padding: 15px 25px 15px 25px">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Address</th>
+                                            <th>Expired date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="footer"></div> -->
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        $("#navigation").load("navbar.html");
+        window.onload = function () {
+            $(".menu.record a").css({ "background-color": "#111", "color": "white" });
+        };
+
+		$('.buttonSubmit').click(function() {
+            $(".result_medical, .result_authorization, .noti, .text-fail, .text-successful").css("display", "none");
+			$('.row-table').remove();
+            $('.result_sympton').remove();
+            $('.result_medicine').remove();
+		})
+
+        $(".circle-loader-later").toggleClass("load-complete-later");
+
+        let temp = $("input[name='access']").click(function () {
+            if ($("input[name='access']:checked").val() == 'info') {
+                $("#info").css("display", "inline-block");
+                $("#authority, #give, #remove, #trade, #expire, .address, .trade, #expire").css("display", "none");
+
+            } else if ($("input[name='access']:checked").val() == 'authority') {
+                $("#info, #give, #remove, #trade, #expire, .address, .trade, #expire").css("display", "none");
+                $("#authority").css("display", "inline-block");
+            }
+            else if ($("input[name='access']:checked").val() == 'give') {
+                $("#info, #authority, #remove, #expire, #trade, .trade, #expire").css("display", "none");
+                $("#give").css("display", "inline-block");
+                $(".address").css("display", "block")
+            }
+            else if ($("input[name='access']:checked").val() == 'remove') {
+                $("#info, #authority, #give, #expire, #trade, .address, #expire").css("display", "none");
+                $("#remove").css("display", "inline-block");
+                $(".trade").css("display", "block")
+            }
+            else if($("input[name='access']:checked").val() == 'trade'){
+                $("#info, #authority, #give, #remove, .address, #expire").css("display", "none");
+                $("#trade").css("display", "inline-block");
+                $(".trade").css("display", "block")
+            }
+                else if($("input[name='access']:checked").val() == 'expire'){
+                $("#info, #authority, #give, #remove, .address, #trade, .trade").css("display", "none");
+                $("#expire").css("display", "inline-block");
+            }
+        });
+    });
+</script>
+<script src="./Record.js"></script>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+	.body {
+		background-image: linear-gradient(to right, #929daa, #ededef);
+		min-height: 651px;
+        max-height: 3000px;
+	}
+
+	#send{
+		margin-top: 2%;
+		width: 30%;
+		text-align: center;
+		margin-left: 70%
+	}
+
+	#content{
+		width: 100%;
+		min-height: 300px;
+		margin: 0 0 20px 0;
+		border: solid 1px #999;
+		overflow-y: scroll
+	}
+</style>
+
+<head>
+	<meta charset="utf-8">
+	<link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+	<script src="javascript/socket.io.js"></script>
+	<script type="text/javascript" src="javascript/jquery.min.js"></script>
+	<script src="javascript/web3.min.js"></script>
+</head>
+
+<body>
+	<div class="body">
+		<div id="navigation"></div>
+
+		<div class="container form" style="width: 100%">
+			<div class="row" style="margin: 6% 0 6% 0">
+				<div class="col-lg-12">
+					<div class="modal-dialog" style="width: 50%; left: 25%; margin: 0px !important">
+						<div class="modal-content">
+							<div class="modal-header text-center" style="background: rgb(131, 131, 134)">
+								<h3 class="modal-title w-100" style="font-weight: bold; font-size: 28px">Chat room</h3>
+							</div>
+							<div class="modal-body" style="padding: 15px 25px 15px 25px">
+									<div id="content" class="form-control"></div>
+									<textarea class="form-control" rows="2" id="field" style="width: 100%"></textarea>
+									<button id="send" class="btn btn-primary">Send</button>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div id="footer"></div> -->
+	</div>
+</body>
+
+<script>
+	$(document).ready(function () {
+		$("#navigation").load("navbar.html");
+	});
+
+
+</script>
+	<script type="text/javascript" src="./chatroom.js"></script>
+</html>

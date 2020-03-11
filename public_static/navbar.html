@@ -1,0 +1,106 @@
+<style>
+    .header-menu {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+        height: auto;
+    }
+
+    .menu {
+        float: left;
+    }
+
+    .menu.child a {
+        display: block;
+        color: #e1e5ea;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        background-color: #333;
+        font-size: 15px;
+        height: 100%;
+        line-height: 28px;
+        width: 130px;
+        font-weight: bold;
+    }
+
+    .menu a:hover:not(.active) {
+        background-color: #111;
+        text-decoration: none;
+        color: white;
+        height: 110%;
+    }
+
+    .brand a {
+        display: block;
+        color: #e1e5ea;
+        text-align: center;
+        text-decoration: none;
+        background-image: linear-gradient(to right, #1a1a1a, #585858);
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .menu.brand {
+        width: 18%;
+    }
+    .author ul{
+        display: none;
+    }
+
+    .author ul a{
+        padding: 10px 12px !important;
+    }
+    .author:hover > ul{
+        display: block;
+        position: absolute;
+        z-index: 1;
+        list-style: none;
+        padding: 0px;
+        width: 130px;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8">
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <script src="javascript/jquery.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <ul class="header-menu">
+        <li class="menu brand">
+            <a href="index.html">EMR</a>
+        </li>
+        <li class="menu record child">
+            <a href="Record.html">RECORD</a>
+        </li>
+        <li class="menu form child">
+            <a href="Form.html">FORM</a>
+        </li>
+        <li class="menu research child">
+            <a href="Research.html">RESEARCH</a>
+        </li>
+        <li class="menu author child">
+            <a>HOSPITAL</a>
+            <ul>
+                <li>
+                    <a href="List_doctor.html">List doctor</a>
+                </li>
+                <li>
+                    <a href="List_record.html">Search record</a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="menu chatroom child">
+            <a href="Chatroom.html">CHAT ROOM</a>
+        </li>
+    </ul>
+</body>
